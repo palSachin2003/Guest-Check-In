@@ -26,14 +26,15 @@ const storsge = multer.diskStorage({
 
 const upload = multer({
     storage: storsge,
-    limits: { fileSize: 1024 * 1024 * 5 },  
+    limits: { fileSize: 1024 * 1024 * 5 },
     fileFilter: (req, file, cb) => {
-        if (file.mimetype === "image/jpeg" || file.mimetype === "image/png" || file.mimetype === "image/svg" || file.mimetype === "image/jpg") {
+        if (file.mimetype === "image/jpeg" || file.mimetype === "image/png" || file.mimetype === "image/svg" || file.mimetype === "image/jpg" || file.mimetype === "image/svg+xml") {
             cb(null, true);
         } else {
-            cb(new Error("Only .jpeg or .png files are allowed!"), false);
+            cb(new Error("Only .jpeg, .jpg, .png files are allowed!"), false);
         }
     },
+
 });
 
 
@@ -150,7 +151,7 @@ export const findUserByDetails = async (req, res) => {
         const { firstName, lastName, cruiseName, cabinNumber, cruiseBookingId, passportNumber } = req.body;
 
         // Ensure all required fields are provided
-        if (!firstName || !lastName || !cruiseName || !cabinNumber|| !cruiseBookingId|| !passportNumber) {
+        if (!firstName || !lastName || !cruiseName || !cabinNumber || !cruiseBookingId || !passportNumber) {
             return res.status(400).json({
                 message: "Missing required fields: firstName, lastName,cruiseName."
             });
